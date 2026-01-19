@@ -1,4 +1,4 @@
-Examples and experiments on multithreading
+Examples and experiments on C++, including multithreading
 
 Some data on SCC example:
 
