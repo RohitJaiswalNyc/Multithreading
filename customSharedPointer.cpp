@@ -85,11 +85,11 @@ struct shared_ptr2{
   int* ref_cnt;
 
   shared_ptr2(T val) : ptr(new T(val)), ref_cnt(new int(1)) {
-    cout << "hi4\n";
+    cout << "Constructor with value\n";
   }  
 
   shared_ptr2() : ptr(nullptr), ref_cnt(nullptr) {
-    cout << "hi3\n";
+    cout << "Default Constructor\n";
 
   }  
 
@@ -101,29 +101,59 @@ struct shared_ptr2{
   }
 
   shared_ptr2& operator=(const shared_ptr2& other){
-    cout << "hi\n";
-    if(*this != other){
-      if(--(*ref_cnt) == 0){
+    cout << "Copy Assignment\n";
+    if(ptr != other.ptr){
+      if(ref_cnt != nullptr && --(*ref_cnt) == 0){
         delete ptr;
         delete ref_cnt;
       }
 
       ptr = other.ptr;
       ref_cnt = other.ref_cnt;
-      (*ref_cnt)++;
+      if(ref_cnt)(*ref_cnt)++;
+    }
+    return *this;
+  }
+
+  shared_ptr2& operator=(shared_ptr2&& other){
+    cout << "Move assignment\n";
+    if(ptr != other.ptr){
+      reset();
+
+      ptr = other.ptr;
+      ref_cnt = other.ref_cnt;
+      other.ptr = nullptr;
+      other.ref_cnt = nullptr;
     }
     return *this;
   }
 
   void reset(){
-    --(*this->ref_cnt);
-    this->ptr = nullptr;
-    this->ref_cnt = nullptr;
+    if(ptr == nullptr) return;
+    --(*ref_cnt);
+    if(*ref_cnt == 0){
+      delete ptr;
+      delete ref_cnt;
+    }
+    ptr = nullptr;
+    ref_cnt = nullptr;
   }
 
-  shared_ptr2(shared_ptr2& other) : ptr(other.ptr), ref_cnt(other.ref_cnt){
-    cout << "hi2\n";
-    (*ref_cnt)++;
+  shared_ptr2(const shared_ptr2& other) : ptr(other.ptr), ref_cnt(other.ref_cnt){
+    cout << "Copy constructor\n";
+    if(ref_cnt)(*ref_cnt)++;
+  }
+
+  shared_ptr2(shared_ptr2&& other) : ptr(other.ptr), ref_cnt(other.ref_cnt){
+    cout << "Move constructor\n";
+    ptr = other.ptr;
+    ref_cnt = other.ref_cnt;
+    other.ptr = nullptr;
+    other.ref_cnt = nullptr;
+  }
+
+  bool operator!=(const shared_ptr2& other) const {
+    return ptr != other.ptr;
   }
 
 };
@@ -132,6 +162,10 @@ void solve(){
   shared_ptr2<int> ptr(2);
   auto ptr2 = ptr;
   ptr2.reset();
+  auto ptr3 = ptr;
+  auto ptr4 = move(ptr3);
+  shared_ptr2<int> ptr5;
+  ptr5 = move(ptr4);
   cout << *(ptr.ref_cnt) << endl;
 }
 
