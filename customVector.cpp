@@ -89,11 +89,10 @@ struct customVector{
 
 
   void push_back(T x) noexcept {
-    
     if(currentSize == maxSize){
       unique_ptr<T[]> newArray = make_unique<T[]>(2*maxSize);
       for(int i=0;i<currentSize;i++){
-        newArray[i] = array[i];
+        newArray[i] = move(array[i]);
       }
       maxSize *= 2;
       // cout << "Size Increased " << maxSize << endl;
@@ -103,11 +102,11 @@ struct customVector{
 
   }
 
-  void shrink_to_fir(){
+  void shrink_to_fit(){
     int newSize = max(1,currentSize);
     unique_ptr<T[]> newArray = make_unique<T[]>(newSize);
     for(int i=0;i<currentSize;i++){
-      newArray[i] = array[i];
+      newArray[i] = move(array[i]);
     }
     array = move(newArray);
     maxSize = newSize;
@@ -122,29 +121,38 @@ struct customVector{
     return !currentSize;
   }
   
-  T& back() const {
-    if(empty()) throw runtime_error("Asking Last Element of Empty Vector");
+  T& back() {
     return array[currentSize-1];
   }
 
+
+  // if you want to save memory when using vector<vector<int>> or vector<string>
+  // void pop_back(){
+  //   if(currentSize > 0){
+  //     currentSize--;
+  //     array[currentSize] = T();
+  //   }
+  // }
+
   void pop_back(){
-    if(currentSize == 0) throw runtime_error("pop_back attempted at empty array");
     currentSize--;
   }
-
 
   void reserve(int newSize) noexcept {
     if(newSize <= maxSize) return;
     unique_ptr<T[]> newArray = make_unique<T[]>(newSize);
     for(int i=0;i<currentSize;i++){
-      newArray[i] = array[i];
+      newArray[i] = move(array[i]);
     }
     maxSize = newSize;
     array = move(newArray);
   }
 
-  T& operator[](const int i) const {
-    if(i >= currentSize) throw runtime_error("Index out of range");
+  T& operator[](const int i) {
+    return array[i];
+  }
+
+  const T& operator[](const int i) const {
     return array[i];
   }
 };
@@ -186,4 +194,3 @@ int main(){
   }   
   return 0; 
 }     
-
