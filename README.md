@@ -1,6 +1,6 @@
 Examples and experiments on C++, including multithreading
 
-<h3>Strongly Connected Components</h3>
+<h4>Strongly Connected Components</h4>
 Some data on SCC example:
 
 same test case random data
