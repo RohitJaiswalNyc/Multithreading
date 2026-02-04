@@ -103,23 +103,18 @@ public:
     while(!head.compare_exchange_weak(new_head->next,new_head)){
 
     }
-    head.notify_all();
 
   }
 
-  T pop(){
+  bool pop(T& result){
     shared_ptr<Node> old_head = head;
-    while(true){
-      while(!old_head){
-        head.wait(nullptr);
-        old_head = head.load();
-      }
+    while(old_head){
       if(head.compare_exchange_weak(old_head,old_head->next)){
-        return old_head->val;
+        result = old_head->val;
+        return 1;
       }
-      
     }
-    return -1;
+    return 0;
   }
 
 
@@ -129,10 +124,10 @@ public:
     }
   }
 
-  vector<T> pop_worker(int left,int right){
-    vector<T> res;
+  vector<T> pop_worker(int left,int right,vector<T>& res){
+    std::this_thread::sleep_for(std::chrono::microseconds(100));
     for(int i=left;i<=right;i++){
-      res.pb(pop());
+      while(!pop(res[i])){}
     }
     return res;
   }
@@ -143,21 +138,20 @@ public:
 
 void solve(){
 
-  vector<thread> t;
-  vector<future<vector<int>>> f;
+  vector<thread> push;
+  vector<thread> pop;
   lockFreeStack<int> lfs;
+  vi result(100);
   forn(i,10){
-    t.eb(&lockFreeStack<int>::push_worker,&lfs,i*10,(i+1)*10 - 1);
-    f.eb(async(launch::async,&lockFreeStack<int>::pop_worker,&lfs,i*10,(i+1)*10 - 1));
+    push.eb(&lockFreeStack<int>::push_worker,&lfs,i*10,(i+1)*10 - 1);
+    pop.eb(&lockFreeStack<int>::pop_worker,&lfs,i*10,(i+1)*10 - 1,ref(result));
   }
 
   forn(i,10){
-    t[i].join();
-    vi z = f[i].get();
-    for(auto &x:z){
-      cout << x << " ";
-    }
+    push[i].join();
+    pop[i].join();
   }
+  for(int &x:result) cout << x << " ";
   en;
 
   
