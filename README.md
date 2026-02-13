@@ -18,3 +18,4 @@ spawn a thread for each job: 12.5922
 Batching 10 jobs per thread: 2.3009
 
 Todo: Implement Hazard Pointer in Treiber stack and Lock free queue
+Todo: Implement Multithreading in Tree structure
