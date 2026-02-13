@@ -15,6 +15,6 @@ single thread: Total runtime: 2.10117 seconds
 <h4>Treiber Stack</h4>
 cpu thread limit:16
 spawn a thread for each job: 12.5922
-Batching 10jobs per thread: 2.3009
+Batching 10 jobs per thread: 2.3009
 
 Todo: Implement Hazard Pointer in Treiber stack and Lock free queue
