@@ -20,8 +20,8 @@ Batching 10 jobs per thread: 2.3009
 <h4>Treiber Stack with Hazard Pointers</h4>
 cpu thread limit:16
 test scenario: each thread runs a loop 1e4 times on Treiber Stack with Shared Pointers and Treiber Stack with Hazard Pointers and Time to run(in milliseconds) each Program is as Follows:
-</br>
-Treiber Stack with Shared Pointers: 625.785 </br>
+<br>
+Treiber Stack with Shared Pointers: 625.785 <br>
 Treiber Stack with Hazard Pointers: 52.0765
 
 Todo: Implement Hazard Pointer in Treiber stack(done) and Lock free queue
