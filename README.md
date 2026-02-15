@@ -18,9 +18,8 @@ spawn a thread for each job: 12.5922
 Batching 10 jobs per thread: 2.3009
 
 <h3>Treiber Stack with Hazard Pointers</h3>
-cpu thread limit:16
-test scenario: each thread runs a loop 1e4 times on Treiber Stack with Shared Pointers and Treiber Stack with Hazard Pointers and Time to run(in milliseconds) each Program is as Follows:
-<br>
+cpu thread limit:16 <br>
+test scenario: each thread runs a loop 1e4 times on Treiber Stack with Shared Pointers and Treiber Stack with Hazard Pointers and Time to run(in milliseconds) each Program is as Follows: <br>
 <b>Treiber Stack with Shared Pointers: 625.785 </b><br>
 <b>Treiber Stack with Hazard Pointers: 52.0765 </b>
 
