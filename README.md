@@ -1,21 +1,21 @@
-Examples and experiments on C++, including multithreading
+Examples and experiments on C++, including multithreading <br>
 
 <h3>Strongly Connected Components</h3>
-Some data on SCC example:
+Some data on SCC example: <br>
 
-same test case random data
-single thread: Total runtime: 2.09907 seconds
-16 thread: Total runtime: 0.347148 seconds
+same test case random data <br>
+single thread: Total runtime: 2.09907 seconds <br>
+16 thread: Total runtime: 0.347148 seconds <br>
 
-different test cases
-single thread: Total runtime: 2.10117 seconds
-16 threads: Total runtime: 0.354872 seconds
+different test cases <br>
+single thread: Total runtime: 2.10117 seconds <br>
+16 threads: Total runtime: 0.354872 seconds <br>
 
 
 <h3>Treiber Stack with Shared Pointers</h3>
-cpu thread limit:16
-spawn a thread for each job: 12.5922
-Batching 10 jobs per thread: 2.3009
+cpu thread limit:16 <br>
+spawn a thread for each job: 12.5922 <br>
+Batching 10 jobs per thread: 2.3009 <br>
 
 <h3>Treiber Stack with Hazard Pointers</h3>
 cpu thread limit:16 <br>
@@ -23,9 +23,9 @@ test scenario: each thread runs a loop 1e4 times on Treiber Stack with Shared Po
 <b>Treiber Stack with Shared Pointers: 625.785 </b><br>
 <b>Treiber Stack with Hazard Pointers: 52.0765 </b>
 
-Todo: Implement Hazard Pointer in Treiber stack(done) and Lock free queue
-Todo: Implement Multithreading in Tree structure
-Todo: update Vector implementation to add functionalities
+Todo: Implement Hazard Pointer in Treiber stack(done) and Lock free queue <br>
+Todo: Implement Multithreading in Tree structure <br>
+Todo: update Vector implementation to add functionalities <br>
 
 
 
