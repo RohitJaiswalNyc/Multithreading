@@ -26,8 +26,8 @@
 // hashmap
 // #include <ext/pb_ds/assoc_container.hpp>
 // using namespace __gnu_pbds;
-// #pragma GCC optimize ("O3")
-// #pragma GCC target ("sse4")
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
 using namespace std;
  
 #define rep(i,j,k) for(int i=j;i<=(int)k;i++)
@@ -97,16 +97,14 @@ class hazardManager{
   vector<atomic<Node<T>*>> hazard_pointers;
 
 
-  vector<vector<Node<T>*>> retired_list;
-
-
 public:
+  vector<vector<Node<T>*>> retired_list;
 
   hazardManager() : hazard_pointers(cores), retired_list(cores){}
 
 
   void aquire(int tid,Node<T>* node){
-    assert(node != nullptr);
+    // assert(node != nullptr);
     if(node) hazard_pointers[tid].store(node);
   }
 
@@ -116,7 +114,7 @@ public:
 
   void retire(int tid, Node<T>* node){
     retired_list[tid].pb(node);
-    if(sz(retired_list) >= RETIRE_THRESHOLD){
+    if(sz(retired_list[tid]) >= RETIRE_THRESHOLD){
       scan(tid);
     }
   }
@@ -128,7 +126,6 @@ public:
       Node<T>* p = x.load();
       if(p) active_hps.pb(p);
     }
-
 
     auto it = retired_list[tid].begin();
     while(it != retired_list[tid].end()){
@@ -159,16 +156,16 @@ public:
     Node<T>* new_head = new Node(val);
     new_head->val = val;
     
-    new_head->next = head.load();
+    new_head->next = head.load(memory_order_relaxed);
 
-    while(!head.compare_exchange_weak(new_head->next,new_head)){
+    while(!head.compare_exchange_weak(new_head->next,new_head,memory_order_release)){
 
     }
 
   }
 
   bool pop(T& result,int tid){
-    Node<T>* old_head = head.load();
+    Node<T>* old_head = head.load(memory_order_acquire);
     while(old_head){
       hp.aquire(tid,old_head);
 
@@ -182,11 +179,10 @@ public:
         result = old_head->val;
 
         hp.release(tid);
-        // hp.retire(tid,old_head);
+        hp.retire(tid,old_head);
 
         return 1;
       }
-
     }
     return 0;
   }
@@ -225,8 +221,9 @@ void solve(){
     push[i].join();
     pop[i].join();
   }
-  for(int &x:result) cout << x << " ";
-  en;
+  
+  // for(int &x:result) cout << x << " ";
+  // en;
 
   
 }
