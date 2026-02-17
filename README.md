@@ -34,7 +34,7 @@ Todo: update Vector implementation to add functionalities <br>
 Number of iterations: 1e4 <br>
 1079.82 // shared pointers <br>
 44.247 // not deleting memory <br>
-44.3623 // deleting memory with hazard pointers <br>
+44.3623 // deleting memory with hazard pointers <br> <br>
 
 
 Number of iterations: 1e6 <br>
