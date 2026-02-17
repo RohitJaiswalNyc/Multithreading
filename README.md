@@ -21,7 +21,10 @@ Batching 10 jobs per thread: 2.3009ms <br>
 cpu thread limit:16 <br>
 test scenario: each thread runs a loop 1e4 times on Treiber Stack with Shared Pointers and Treiber Stack with Hazard Pointers and Time to run(in milliseconds) each Program is as Follows: <br>
 <b>Treiber Stack with Shared Pointers: 625.785ms </b><br>
-<b>Treiber Stack with Hazard Pointers: 52.0765ms </b>
+<b>Treiber Stack with Hazard Pointers: 52.0765ms </b><br>
+Tested on loop of size 1e6 <br>
+<b>Treiber Stack with Shared Pointers: 73624.8ms </b><br>
+<b>Treiber Stack with Hazard Pointers: 4095.24ms </b> 
 
 Todo: Implement Hazard Pointer in Treiber stack(done) and Lock free queue <br>
 Todo: Implement Multithreading in Tree structure <br>
