@@ -30,5 +30,15 @@ Todo: Implement Hazard Pointer in Treiber stack(done) and Lock free queue <br>
 Todo: Implement Multithreading in Tree structure <br>
 Todo: update Vector implementation to add functionalities <br>
 
+<h3> Lock Free Queue Stats: </h3>
+Number of iterations: 1e4 <br>
+1079.82 // shared pointers <br>
+44.247 // not deleting memory <br>
+44.3623 // deleting memory with hazard pointers <br>
+
+
+Number of iterations: 1e6 <br>
+4469.54 // not deleting memory <br>
+4516.4 // deleting memory with hazard pointers <br>
 
 
