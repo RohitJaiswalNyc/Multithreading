@@ -19,8 +19,6 @@
 #include <bitset>
 #include <array>
 #include<deque>
-#include<future>
-
 // hashmap
 // #include <ext/pb_ds/assoc_container.hpp>
 // using namespace __gnu_pbds;
@@ -78,105 +76,15 @@ int inf = 1e9 + 5;
 const int MOD = 998244353;
 const int N = 2e5 + 5;
 
-struct arr{
-
-  int n;
-  int* a;
-
-  arr(int _n) : n(_n), a(new int[n]){}
-
-  ~arr(){
-    delete[] a;
-  }
-
-  const int& operator[](int i) const noexcept{
-    return a[i];
-  }
-  int& operator[](int i) noexcept{
-    return a[i];
-  }
-
-  arr& operator=(const arr& rhs) noexcept {
-    cout << "Copy assignment\n";
-    if(this == &rhs) return *this;
-    delete[] a;
-    this->n = rhs.n;
-    a = new int[n];
-    forn(i,n){
-      a[i] = rhs[i];
-    }
-
-    return *this;
-  };
-
-  arr(const arr& rhs){
-    cout << "Copy Constructor\n";
-    this->n = rhs.n;
-    a = new int[n];
-    forn(i,n){
-      a[i] = rhs[i];
-    }
-  }
-  
-  arr& operator=(arr&& rhs) noexcept {
-    cout << "Move assignment\n";
-    if(this == &rhs) return *this;
-    delete[] a;
-
-    this->a = rhs.a;
-    this->n = rhs.n;
-    rhs.a = nullptr;
-    rhs.n = 0;
-    return *this;
-  };
-
-  arr(arr&& rhs){
-    cout << "Move Constructor\n";
-    this->a = rhs.a;
-    this->n = rhs.n;
-
-    rhs.a = nullptr;
-    rhs.n = 0;
-  }
-
-
-
-  friend istream& operator>>(istream& i,int& v) noexcept {
-    i >> v;
-
-    return i;
-  }
-
-  int size(){
-    return this->n;
-  }
-
-};
-
-arr z_func(future<arr> f) {
-  arr s = f.get();
-  return s;
-}
 
 void solve(){
-  promise<arr> p;
-  future<arr> f = p.get_future();
-  future<arr> fu = async(launch::async,z_func,move(f));
-
-  arr s(10);
-  forn(i,10){
-    cin >> s[i];
+  int n;
+  cin >> n;
+  int a[n];
+  forn(i,n){
+    cin >> a[i];
   }
-
   
-  p.set_value(move(s));
-  arr x = fu.get();
-  cout << x.size() << endl;
-  forn(i,x.size()){
-    cout << x[i] << " ";
-  }
-  cout << endl;
-
 }
 
 int main(){
